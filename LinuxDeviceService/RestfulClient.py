@@ -1,7 +1,7 @@
 #RestfulClient.py
 
 import requests
-from subprocess import call
+from subprocess import check_output
 
 # Replace with the correct URL
 url = "http://34.251.68.107:5000/api/"
