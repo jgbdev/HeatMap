@@ -47,9 +47,9 @@ print interval
 payload = None
 if (mode == "rpi"):
     print "Using 'rpi' mode"
-    #tempStr = check_output(["/opt/vc/bin/vcgencmd", "measure_temp"])
-    #temp = tempStr.split("=")[1].split("'")[0]
-    temp = 0.5 #float(temp)
+    tempStr = check_output(["/opt/vc/bin/vcgencmd", "measure_temp"])
+    temp = tempStr.split("=")[1].split("'")[0]
+    temp = float(temp)
     print temp
     payload = { "data": [{ "hardware_id": id, "sensor_info": [{ "tag": "cpu_temperature", "value": temp }] }] }
     print payload
