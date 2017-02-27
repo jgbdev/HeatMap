@@ -19,7 +19,7 @@ module.exports =  class DatabaseInterface {
                     lat: 0.11,
                     long: 0.12
                 },
-                refresh_time: 20
+                refresh_time: 30000
             });
         }
     }
