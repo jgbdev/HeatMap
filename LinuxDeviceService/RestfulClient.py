@@ -80,12 +80,12 @@ def SendReading():
             if (stripLine.startswith("temp")):
                 tempPart = stripLine.split('+')[1]
                 tempPart = tempPart.split('°')[0]
-                temp = float(tempPart)
+                temp = float(tempPart.strip())
                 temperatures.append(temp)
             elif (stripLine.startswith("Core ")):
                 tempPart = stripLine.split('+')[1]
                 tempPart = tempPart.split('°')[0]
-                temp = float(tempPart)
+                temp = float(tempPart.strip())
                 temperatures.append(temp)
         
         sensor_info = []
