@@ -25,26 +25,6 @@ RESPONSE
 
 ```
 
-## Register hardware
-
-[POST] `/api/hardware/:device_id`
-
-BODY
-
-```
-{
-  "name": <string>,
-  "type": <string>
-}                    
-```
-
-RESPONSE:
-
-```
-{
-    "hardware_id" : <uint>
-}
-```
 
 
 ## Get Device Info
@@ -61,8 +41,8 @@ BODY
         lat: <float>
         long: <float>
     },
-    refresh_time: <uint>,   (Miliseconds)
-    hardware_ids : [ <uint> ]
+    refresh_time: <uint>   (Miliseconds)
+
 }
 ```
 
@@ -75,7 +55,7 @@ BODY
 {
     data : [{
         "hardware_id" : <string>,
-        "device_info" : [
+        "sensor_info" : [
             {
                 "tag" : <string>,
                 "value": <float>
