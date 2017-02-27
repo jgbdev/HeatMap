@@ -4,14 +4,26 @@
 
 ## Device
 
-[POST] /api/device
-Body: {
+[POST] `/api/device`
+
+BODY
+
+```
+{
     coordinates : {
         lat: <float>
         long: <float>
     }
 }
+```
 
+RESPONSE
+```
+{
+    <device_id> : <uint>
+}
+
+```
 
 ## Register hardware
 
