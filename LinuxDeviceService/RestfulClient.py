@@ -1,6 +1,7 @@
 #RestfulClient.py
 
 import requests
+import json
 from subprocess import check_output
 from threading import Timer,Thread,Event
 
@@ -40,7 +41,9 @@ def GET(api):
         return response.json()
     
 def POST(api, payload):
-    response = requests.post(url + api, data=payload, verify=True)
+    xdata = json.dumps(payload)
+    headers = {'Content-type': 'application/json', 'Accept': 'application/json'}
+    response = requests.post(url + api, data=xdata, headers=headers, verify=True)
     if (not response.ok):
         print("POST request failed!")
         response.raise_for_status()
@@ -71,6 +74,10 @@ def SendReading():
     elif (mode == "sensors"):
         print "Using 'sensors' mode"
         
+        payload = { "data": [{ "hardware_id": "cpu", "sensor_info": [{ "tag": "cpu_temperature", "value": 5 }] }] }
+        print payload
+        print "Uploading reading"
+        POST("reading/" + id, payload)
     else:
         print "Unrecognised mode!"
 
