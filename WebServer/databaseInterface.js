@@ -1,9 +1,16 @@
 "use strict";
+
+
+var r = require('rethinkdb');
+
+
 module.exports =  class DatabaseInterface {
 
     constructor(){
         this.device_id = 0;
     }
+
+
 
 
     device(req, res){
@@ -13,22 +20,28 @@ module.exports =  class DatabaseInterface {
             });
         }else if(req.method == "GET"){
             let id = req.params.id;
-            res.json({
-                    device_id: id,
-                    coordinates : {
-                    lat: 0.11,
-                    long: 0.12
-                },
-                refresh_time: 30000
-            });
+
+            if(id) {
+
+                let id_val = parseInt(id);
+
+                res.json({
+                    device_id: id_val,
+                    coordinates: {
+                        lat: 0.11,
+                        long: 0.12
+                    },
+                    refresh_time: 30000
+                });
+
+            }
         }
     }
 
     reading(req, res){
         if(req.method == "POST"){
-            let body = req.body;
-            console.log(body);
-            res.json({});
+
+
         }else if(req.method == "GET"){
 
         }
