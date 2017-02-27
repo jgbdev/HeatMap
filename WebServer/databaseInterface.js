@@ -99,7 +99,7 @@ module.exports =  class DatabaseInterface {
             let id = req.params.id;
 
             let currentUnixTime = Date.now();
-            let data = req.body;
+            let data = req.body.data;
 
             //TODO Schema check
 
