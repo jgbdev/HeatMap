@@ -6,13 +6,10 @@
 
 [POST] /api/device
 Body: {
-
-    device_id: <uint>,
     coordinates : {
         lat: <float>
         long: <float>
     }
-    refresh_time: <uint>   (Miliseconds)
 }
 
 
@@ -64,9 +61,8 @@ BODY
 BODY
 ```
 {
-    time: <unix_time>
     data : [{
-        "hardware_id" : <uint>,
+        "hardware_id" : <string>,
         "device_info" : [
             {<tag> : <float_value> }
         ]
