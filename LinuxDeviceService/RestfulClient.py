@@ -69,7 +69,7 @@ def SendReading():
     elif (mode == "sensors"):
         print "Using 'sensors' mode"
         
-        #sampleData = "acpitz-virtual-0\nAdapter: Virtual device\ntemp1:        +80.0°C  (crit = +106.0°C)\ntemp2:        +29.8°C  (crit = +106.0°C)\n\ncoretemp-isa-0000\nAdapter: ISA adapter\nPhysical id 0:  +81.0°C  (high = +87.0°C, crit = +105.0°C)\nCore 0:         +74.0°C  (high = +87.0°C, crit = +105.0°C)\nCore 1:         +79.0°C  (high = +87.0°C, crit = +105.0°C)\nCore 2:         +81.0°C  (high = +87.0°C, crit = +105.0°C)\nCore 3:         +78.0°C  (high = +87.0°C, crit = +105.0°C)"
+        #sampleData = "acpitz-virtual-0\nAdapter: Virtual device\ntemp1:        +80.0Â°C  (crit = +106.0Â°C)\ntemp2:        +29.8Â°C  (crit = +106.0Â°C)\n\ncoretemp-isa-0000\nAdapter: ISA adapter\nPhysical id 0:  +81.0Â°C  (high = +87.0Â°C, crit = +105.0Â°C)\nCore 0:         +74.0Â°C  (high = +87.0Â°C, crit = +105.0Â°C)\nCore 1:         +79.0Â°C  (high = +87.0Â°C, crit = +105.0Â°C)\nCore 2:         +81.0Â°C  (high = +87.0Â°C, crit = +105.0Â°C)\nCore 3:         +78.0Â°C  (high = +87.0Â°C, crit = +105.0Â°C)"
         
         sampleData = check_output(["sensors"])
         
@@ -79,13 +79,13 @@ def SendReading():
             stripLine = line.strip()
             if (stripLine.startswith("temp")):
                 tempPart = stripLine.split('+')[1]
-                tempPart = tempPart.split('°')[0]
-                temp = float(tempPart.strip())
+                tempPart = tempPart.split('Â°')[0]
+                temp = float(tempPart.strip('ï¿½'))
                 temperatures.append(temp)
             elif (stripLine.startswith("Core ")):
                 tempPart = stripLine.split('+')[1]
-                tempPart = tempPart.split('°')[0]
-                temp = float(tempPart.strip())
+                tempPart = tempPart.split('Â°')[0]
+                temp = float(tempPart.strip('ï¿½'))
                 temperatures.append(temp)
         
         sensor_info = []
