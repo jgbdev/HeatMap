@@ -26,9 +26,9 @@ class perpetualTimer():
 
 # Replace with the correct URL
 url = "http://34.251.68.107:5000/api/"
-id = "ade79c00-dc89-4158-8a8b-b41d2a3d885c"
+id = "ade79c00-dc89-4158-8a8b-b41d2a3d885c" # Set to None to get new id
 interval = 0
-mode = "sensors" # "rpi" or "sensors"
+mode = "rpi" # "rpi" or "sensors"
 
 def GET(api):
     response = requests.get(url + api, verify=True)
