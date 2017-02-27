@@ -64,7 +64,7 @@ def SendReading():
         temp = tempStr.split("=")[1].split("'")[0]
         temp = float(temp)
         print temp
-        payload = { "data": [{ "hardware_id": id, "sensor_info": [{ "tag": "cpu_temperature", "value": temp }] }] }
+        payload = { "data": [{ "hardware_id": "cpu", "sensor_info": [{ "tag": "cpu_temperature", "value": temp }] }] }
         print payload
         print "Uploading reading"
         POST("reading/" + id, payload)
