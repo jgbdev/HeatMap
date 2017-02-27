@@ -64,3 +64,26 @@ BODY
     }]
 }
 ```
+
+## Get data
+
+
+[GET] `/api/reading/:device_id`
+
+BODY
+```
+{
+    data : [{
+        "hardware_id" : <string>,
+        "sensor_info" : [
+            {
+                "tag" : <string>,
+                "value": <float>
+            }
+        ]
+    }]
+}
+```
+
+
+

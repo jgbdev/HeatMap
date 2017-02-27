@@ -31,6 +31,11 @@ app.post("/api/reading/:device_id", function (req, res){
    dbInterface.reading(req,res);
 });
 
+
+app.get('/api/reading/:device_id', function (req, res){
+    dbInterface.reading(req,res);
+});
+
 app.get("/api/device/:id", function(req, res) {
     console.log("POST: api/device");
     dbInterface.device(req, res);
