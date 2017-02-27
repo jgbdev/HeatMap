@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="API\Coordinates.cs" />
     <Compile Include="API\HeatMapAPI.cs" />
+    <Compile Include="API\Request_SendReading.cs" />
     <Compile Include="API\Response_Id.cs" />
     <Compile Include="API\Response_Device.cs" />
     <Compile Include="Config.cs" />

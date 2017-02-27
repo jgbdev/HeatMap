@@ -34,25 +34,8 @@ namespace HeatMap_Console
                     Console.WriteLine(ex.StackTrace);
                 }
             }
-
-            if (OK)
-            {
-                try
-                {
-                    if (!(OK = manager.Update()))
-                    {
-                        Console.WriteLine("Manager failed to update!");
-                    }
-                }
-                catch (Exception ex)
-                {
-                    OK = false;
-
-                    Console.WriteLine("Caught exception during updating: ");
-                    Console.WriteLine(ex.Message);
-                    Console.WriteLine(ex.StackTrace);
-                }
-            }
+            
+            WaitShutdown();
 
             //Bypass: if (OK)
             {
@@ -73,7 +56,7 @@ namespace HeatMap_Console
                 }
             }
 
-            Exit();
+            WaitExit();
         }
 
         private static void Logger_OnMessageLogged(string message)
@@ -81,9 +64,14 @@ namespace HeatMap_Console
             Console.WriteLine(message);
         }
 
-        static void Exit()
+        static void WaitShutdown()
         {
-            Console.WriteLine("Press any key to continue...");
+            Console.WriteLine("Press any key to shutdown...");
+            Console.ReadKey();
+        }
+        static void WaitExit()
+        {
+            Console.WriteLine("Press any key to exit...");
             Console.ReadKey();
         }
     }

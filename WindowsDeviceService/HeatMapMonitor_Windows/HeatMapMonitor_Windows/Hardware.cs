@@ -44,12 +44,10 @@ namespace HeatMapMonitor_Windows
         private void Computer_HardwareAdded(IHardware hardware)
         {
             Logger.Log("Hardware added: " + hardware.Identifier);
-            //TODO?
         }
         private void Computer_HardwareRemoved(IHardware hardware)
         {
             Logger.Log("Hardware removed: " + hardware.Identifier);
-            //TODO?
         }
 
         ~Hardware()

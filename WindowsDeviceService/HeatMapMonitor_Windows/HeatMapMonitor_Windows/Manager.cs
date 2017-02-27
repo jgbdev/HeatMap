@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Timers;
 
 namespace HeatMapMonitor_Windows
 {
@@ -16,6 +17,9 @@ namespace HeatMapMonitor_Windows
         string ConfigPath;
 
         Hardware hardware;
+        API.HeatMapAPI api;
+        Config config;
+        Timer timer;
 
         public bool Init()
         {
@@ -23,7 +27,6 @@ namespace HeatMapMonitor_Windows
 
             ConfigPath = Path.Combine(Environment.CurrentDirectory, "config.txt");
 
-            Config config;
             try
             {
                 config = new Config(ConfigPath);
@@ -43,7 +46,7 @@ namespace HeatMapMonitor_Windows
                 config = new Config(DefaultAPIBaseURL, DefaultAPIAccountId, DefaultAPISecretKey);
             }
 
-            API.HeatMapAPI api = new API.HeatMapAPI(config);
+            api = new API.HeatMapAPI(config);
 
             if (!config.HasDeviceId)
             {
@@ -54,9 +57,42 @@ namespace HeatMapMonitor_Windows
 
             Logger.Log("Device id: " + config.DeviceId);
 
+            config.UpdatePeriod = api.GetInterval(config.DeviceId.Value);
+
+            Logger.Log("Update period: " + config.UpdatePeriod);
+            
             hardware = new Hardware();
 
+            timer = new Timer(config.UpdatePeriod);
+            timer.Elapsed += Timer_Elapsed;
+
+            if(!Update())
+            {
+                throw new Exception("Failed initial update.");
+            }
+
+            timer.Start();
+
             return OK;
+        }
+
+        private void Timer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            bool Updated = false;
+            try
+            {
+                Updated = Update();
+            }
+            catch
+            {
+                Updated = false;
+            }
+
+            if (!Updated)
+            {
+                Logger.Log("Manager failed to update. Stopping interval timer...");
+                timer.Stop();
+            }
         }
 
         public bool Update()
@@ -64,14 +100,19 @@ namespace HeatMapMonitor_Windows
             Logger.Log("Updating...");
 
             Dictionary<string, HardwareInfo> HardwareInfos = hardware.GetHardwareInfos();
-            
-            return false;
+            api.SendReading(config.DeviceId.Value, HardwareInfos);
+
+            return true;
         }
 
         public bool Shutdown()
         {
-            //TODO
-            return false;
+            if (timer != null)
+            {
+                timer.Stop();
+            }
+
+            return true;
         }
     }
 }

@@ -57,14 +57,53 @@ namespace HeatMapMonitor_Windows.API
             
             return (Execute<Response_Id>(request) ?? new Response_Id()).device_id;
         }
-        public uint GetInterval()
+        public uint GetInterval(uint DeviceId)
         {
             var request = new RestRequest();
-            request.Resource = "interval";
+            request.Resource = "device/{id}";
+            request.AddParameter("id", DeviceId.ToString());
             request.Method = Method.GET;
 
             Response_Device resp = (Execute<Response_Device>(request) ?? new Response_Device());
             return resp.refresh_time;
+        }
+
+        public void SendReading(uint DeviceId, Dictionary<string, HardwareInfo> HardwareInfos)
+        {
+            Request_SendReading requestData = new Request_SendReading();
+            foreach (string HWId in HardwareInfos.Keys)
+            {
+                HardwareInfo HWInfo = HardwareInfos[HWId];
+                ReadingData hwdata = new ReadingData()
+                {
+                    hardware_id = HWId
+                };
+
+                foreach (string SNId in HWInfo.Sensors.Keys)
+                {
+                    foreach (KeyValuePair<string, float> value in HWInfo.Sensors[SNId].Values)
+                    {
+                        hwdata.sensor_info.Add(new SensorData()
+                        {
+                            tag = SNId + "_" + value.Key,
+                            value = value.Value
+                        });
+                    }
+                }
+
+                if (hwdata.sensor_info.Count > 0)
+                {
+                    requestData.data.Add(hwdata);
+                }
+            }
+
+            var request = new RestRequest();
+            request.Resource = "reading/{id}";
+            request.AddParameter("id", DeviceId.ToString());
+            request.Method = Method.POST;
+            request.AddJsonBody(requestData);
+
+            Execute<Object>(request);
         }
     }
 }

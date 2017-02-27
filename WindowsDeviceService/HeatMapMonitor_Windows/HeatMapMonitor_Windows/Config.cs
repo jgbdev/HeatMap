@@ -26,6 +26,12 @@ namespace HeatMapMonitor_Windows
             get; private set;
         }
 
+        public uint UpdatePeriod
+        {
+            get;
+            set;
+        }
+
         public bool HasDeviceId
         {
             get

@@ -11,6 +11,5 @@ namespace HeatMapMonitor_Windows.API
         public uint device_id { get; set; }
         public Coordinates coordinates { get; set; }
         public uint refresh_time { get; set; }
-        public uint[] hardware_ids { get; set; }
     }
 }
