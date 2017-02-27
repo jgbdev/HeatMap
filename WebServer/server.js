@@ -26,7 +26,9 @@ app.post("/api/device/", function(req, res) {
     dbInterface.device(req, res);
 });
 
-
+app.get('/', function (req, res) {
+    res.status(404)
+});
 
 
 var port = process.env.PORT || 5000;
