@@ -99,17 +99,17 @@ module.exports =  class DatabaseInterface {
             let id = req.params.id;
 
             let currentUnixTime = Date.now();
-            let body = req.body;
+            let data = req.body;
 
             //TODO Schema check
 
-            let data = {
+            let dd = {
                 "device_id" : id ,
                 "time_stamp" : currentUnixTime,
-                body
+                data
             };
-            console.log(data);
-            r.table('readings').insert(data).run(connection, function(err, call){
+            console.log(dd);
+            r.table('readings').insert(dd).run(connection, function(err, call){
                     if(err){
                         console.log(err);
                     }else{
