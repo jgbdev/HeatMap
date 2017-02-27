@@ -44,6 +44,33 @@ RESPONSE
 ```
 
 
+## Update Device Information
+
+[PATCH] `/api/device/:id`
+
+BODY
+```
+{
+    coordinates : {
+        lat: <float>
+        long: <float>
+    }
+}
+
+```
+
+
+RESPONSE
+
+```
+{
+    "devices" : [<string>]
+}
+
+```
+
+
+
 ## Get Device Info
 
 [GET] `/api/device/:id`

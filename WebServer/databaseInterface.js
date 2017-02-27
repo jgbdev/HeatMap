@@ -100,6 +100,25 @@ module.exports =  class DatabaseInterface {
                 });
 
             }
+        }else if(req.method == "PATCH"){
+
+            let id = req.params.id;
+
+            let body = req.body;
+            console.log(body);
+
+
+            r.table('devices').get(id).update(body).run(connection, function(err, data) {
+
+                if(err){
+                    res.json(500);
+                }else{
+                    res.json(body);
+                }
+
+            });
+
+
         }
     }
 

@@ -11,6 +11,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 
+//DEVICE APIS
 app.post("/api/device/", function(req, res) {
     console.log("POST: api/device");
     dbInterface.device(req, res);
@@ -21,12 +22,17 @@ app.get("/api/device/:id", function(req, res) {
     dbInterface.device(req, res);
 });
 
+app.patch("/api/device/:id", function(req, res) {
+    console.log("GET: api/device");
+    dbInterface.device(req, res);
+});
+
 app.get("/api/device", function(req, res) {
     console.log("GET: api/device");
     dbInterface.device(req, res);
 });
 
-
+//READING APIS
 app.get('/api/reading/:id', function (req, res){
     dbInterface.reading(req,res);
 });
