@@ -2,7 +2,8 @@
 let r = require('rethinkdb');
 
 let connection = null;
-
+let db_name = 'test';
+let refresh_time = 30000;
 module.exports =  class DatabaseInterface {
 
     constructor(){
@@ -15,7 +16,7 @@ module.exports =  class DatabaseInterface {
         r.connect({
             host: 'localhost',
             port: '32769',
-            db : 'test'
+            db : db_name
         }, function (err, conn){
             console.log("Connected");
             connection = conn;
@@ -35,7 +36,14 @@ module.exports =  class DatabaseInterface {
 
     device(req, res){
         if(req.method == "POST"){
-            r.db('test').table('devices').insert({}).run(connection, function(err, call){
+            r.table('devices').insert(
+                {
+                    "refresh_time":refresh_time,
+                    coordinates: {
+                        lat: 0.11,
+                        long: 0.12
+                    }
+                }).run(connection, function(err, call){
 
                 if(err){
                     console.log(err);
@@ -56,10 +64,12 @@ module.exports =  class DatabaseInterface {
 
             if(id) {
 
-                let id_val = parseInt(id);
+                r.table('devices').get(id).run(connection, function(err, data){
+                    console.log(data);
+                });
 
                 res.json({
-                    device_id: id_val,
+                    device_id: id,
                     coordinates: {
                         lat: 0.11,
                         long: 0.12
