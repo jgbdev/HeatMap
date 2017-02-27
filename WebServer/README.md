@@ -76,7 +76,10 @@ BODY
     data : [{
         "hardware_id" : <string>,
         "device_info" : [
-            {<tag> : <float_value> }
+            {
+                "tag" : <string>,
+                "value": <float>
+            }
         ]
     }]
 }
