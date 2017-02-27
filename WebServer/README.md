@@ -36,7 +36,7 @@ RESPONSE
 BODY
 ```
 {
-    device_id: <uint>,
+    device_id: <string> ,
     coordinates : {
         lat: <float>
         long: <float>
