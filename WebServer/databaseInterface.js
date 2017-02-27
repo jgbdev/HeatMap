@@ -121,7 +121,7 @@ module.exports =  class DatabaseInterface {
             let id = req.params.id;
 
             if(id) {
-                r.table('readings').orderBy({index: r.asc('time_stamp')}).filter({"device_id":  id}).nth(0).run(connection, function (err, data) {
+                r.table('readings').orderBy({index: r.desc('time_stamp')}).filter({"device_id":  id}).nth(0).run(connection, function (err, data) {
                     if(err){
                         console.log(err);
                         res.status(500);
