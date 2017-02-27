@@ -1,8 +1,10 @@
 #RestfulClient.py
 
 import requests
+import json
 from subprocess import check_output
 from threading import Timer,Thread,Event
+import os.path
 
 
 class perpetualTimer():
@@ -23,13 +25,6 @@ class perpetualTimer():
    def cancel(self):
       self.thread.cancel()
       
-
-# Replace with the correct URL
-url = "http://34.251.68.107:5000/api/"
-id = "ade79c00-dc89-4158-8a8b-b41d2a3d885c" # Set to None to get new id
-interval = 0
-mode = "rpi" # "rpi" or "sensors"
-
 def GET(api):
     response = requests.get(url + api, verify=True)
     if (not response.ok):
@@ -40,7 +35,9 @@ def GET(api):
         return response.json()
     
 def POST(api, payload):
-    response = requests.post(url + api, data=payload, verify=True)
+    xdata = json.dumps(payload)
+    headers = {'Content-type': 'application/json', 'Accept': 'application/json'}
+    response = requests.post(url + api, data=xdata, headers=headers, verify=True)
     if (not response.ok):
         print("POST request failed!")
         response.raise_for_status()
@@ -71,15 +68,52 @@ def SendReading():
     elif (mode == "sensors"):
         print "Using 'sensors' mode"
         
+        payload = { "data": [{ "hardware_id": "cpu", "sensor_info": [{ "tag": "cpu_temperature", "value": 5 }] }] }
+        print payload
+        print "Uploading reading"
+        POST("reading/" + id, payload)
     else:
         print "Unrecognised mode!"
 
-    
-if id == None:
+
+
+# Replace with the correct URL
+url = "http://34.251.68.107:5000/api/"
+id = "ade79c00-dc89-4158-8a8b-b41d2a3d885c" # Set to None to get new id
+interval = 0
+mode = "sensors" # "rpi" or "sensors"
+
+configValid = False
+configFile = None
+if (os.path.isfile("heatmap_config.txt")):
+    configFile = open("heatmap_config.txt", "r")
+    lines = configFile.readlines()
+    configFile.close()
+    if (len(lines) >= 4):
+        configValid = True
+        url = lines[0].strip()
+        id = lines[3].strip()
+        if (len(lines) >= 6):
+            mode = lines[5].strip()
+        else:
+            mode = raw_input("What mode should this execute in? sensors or rpi:").strip()
+        
+        print "Existing Id: " + id
+        
+if (not configValid):
     id = GetID()
     print "New Id: " + id
-else:
-    print "Existing Id: " + id
+    
+    configFile = open("heatmap_config.txt", "w")
+    configFile.write(url + "\n")
+    configFile.write("\n")
+    configFile.write("\n")
+    configFile.write(id + "\n")
+    configFile.write("False\n")
+    mode = raw_input("What mode should this execute in? sensors or rpi:")
+    configFile.write(mode + "\n")
+    
+configFile.close()
 
 interval = GetInterval()
 print interval
