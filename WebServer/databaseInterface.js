@@ -26,8 +26,9 @@ module.exports =  class DatabaseInterface {
 
     reading(req, res){
         if(req.method == "POST"){
-
-
+            let body = req.body;
+            console.log(body);
+            res.json({});
         }else if(req.method == "GET"){
 
         }
