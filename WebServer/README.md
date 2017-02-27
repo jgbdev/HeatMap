@@ -16,14 +16,36 @@ Body: {
 }
 
 
-[POST] /api/hardware/:device_id
-Body: {
+## Register hardware
 
+[POST]
+
+`/api/hardware/:device_id`
+
+BODY
+
+```
+{
+  "name": <string>,
+  "type": <string>
+}                    
+```
+
+RESPONSE:
+
+```
+{
+    "hardware_id" : <uint>
 }
+```
 
+
+## Get Device Info
 
 [GET] /api/device/:id
-Resp:
+
+RESPONSE
+
 BODY
 ```
 {
@@ -31,14 +53,15 @@ BODY
     coordinates : {
         lat: <float>
         long: <float>
-    }
-    refresh_time: <uint>   (Miliseconds)
+    },
+    refresh_time: <uint>,   (Miliseconds)
+    hardware_ids : [ <uint> ]
 }
 ```
 
-device id, hardware id  tag float
-POST /api/reading/:device_id
+## Send reading
 
+[POST] /api/reading/:device_id
 BODY
 ```
 {
@@ -51,5 +74,3 @@ BODY
     }]
 }
 ```
-
-
