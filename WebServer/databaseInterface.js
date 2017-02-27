@@ -7,7 +7,7 @@ module.exports =  class DatabaseInterface {
 
     constructor(){
         this.device_id = 0;
-        this.connect(this);
+        //this.connect(this);
 
     }
 
