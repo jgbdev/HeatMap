@@ -92,10 +92,6 @@ namespace HeatMapMonitor_Windows
 
                 hardware.Update();
 
-                System.Threading.Thread.Sleep(1000);
-
-                hardware.Update();
-
                 hardware.Traverse(this);
             }
 
