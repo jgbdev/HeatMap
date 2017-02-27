@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26206.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HeatMapMonitor_Windows", "HeatMapMonitor_Windows\HeatMapMonitor_Windows.csproj", "{06799C83-1B30-4CF9-BF2C-4BCBA312BD76}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HeatMap_Console", "HeatMap_Console\HeatMap_Console.csproj", "{B8E80288-41B6-45DD-96FA-DBDD70843227}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HeatMap_Service", "HeatMap_Service\HeatMap_Service.csproj", "{28AD4D6B-76E9-464D-B9FC-F0044E9EE218}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{06799C83-1B30-4CF9-BF2C-4BCBA312BD76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06799C83-1B30-4CF9-BF2C-4BCBA312BD76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06799C83-1B30-4CF9-BF2C-4BCBA312BD76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06799C83-1B30-4CF9-BF2C-4BCBA312BD76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8E80288-41B6-45DD-96FA-DBDD70843227}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8E80288-41B6-45DD-96FA-DBDD70843227}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8E80288-41B6-45DD-96FA-DBDD70843227}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8E80288-41B6-45DD-96FA-DBDD70843227}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28AD4D6B-76E9-464D-B9FC-F0044E9EE218}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28AD4D6B-76E9-464D-B9FC-F0044E9EE218}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28AD4D6B-76E9-464D-B9FC-F0044E9EE218}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28AD4D6B-76E9-464D-B9FC-F0044E9EE218}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
