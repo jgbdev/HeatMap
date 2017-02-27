@@ -32,6 +32,13 @@ module.exports =  class DatabaseInterface {
                 console.log(err);
             }
         });
+
+
+        r.tableCreate('readings',  {primaryKey: 'id'}).run(connection, function(err, conn){
+            if(err){
+                console.log(err);
+            }
+        });
     }
 
     device(req, res){
@@ -83,10 +90,30 @@ module.exports =  class DatabaseInterface {
 
     reading(req, res){
         if(req.method == "POST"){
-            res.json({});
+
+            let id = req.params.device_id;
+
+            let currentUnixTime = Date.now();
+            let body = req.body;
+
+            //TODO Schema check
+
+            let data = {
+                "device_id" : id ,
+                "time_stamp" : currentUnixTime,
+                body
+            };
+            console.log(data);
+            r.table('readings').insert(data).run(connection, function(err, call){
+                    if(err){
+                        console.log(err);
+                    }else{
+                        res.json(data);
+                    }
+            });
+
         }else if(req.method == "GET"){
             res.json({
-
                 data: [
                     {
                         "hardware_id" : "/dev/sda1",

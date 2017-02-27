@@ -1,6 +1,6 @@
 "use strict";
 let express = require("express");
-var DatabaseInterface = require('./databaseInterface');
+let DatabaseInterface = require('./databaseInterface');
 let app = express();
 
 let bodyParser = require('body-parser')
@@ -27,9 +27,6 @@ app.post("/api/device/", function(req, res) {
 });
 
 
-app.post("/api/reading/:device_id", function (req, res){
-   dbInterface.reading(req,res);
-});
 
 
 app.get('/api/reading/:device_id', function (req, res){
