@@ -49,7 +49,7 @@ if (mode == "rpi"):
     print "Using 'rpi' mode"
     tempStr = check_output(["/opt/vc/bin/vcgencmd", "measure_temp"])
     temp = tempStr.split("=")[1].split("'")[0]
-    payload = '{ data: [{ "hardware_id": "' + id + '", "sensor_info": [{ "tag": "cpu_temperature", "value": ' + temp + ' }] }]'
+    payload = '{ "data": [{ "hardware_id": "' + id + '", "sensor_info": [{ "tag": "cpu_temperature", "value": ' + temp + ' }] }]'
     print "Uploading reading"
     POST("reading/" + id, payload)
 elif (mode == "sensors"):
