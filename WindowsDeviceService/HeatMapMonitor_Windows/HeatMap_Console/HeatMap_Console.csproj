@@ -48,5 +48,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\HeatMapMonitor_Windows\HeatMapMonitor_Windows.csproj">
+      <Project>{06799c83-1b30-4cf9-bf2c-4bcba312bd76}</Project>
+      <Name>HeatMapMonitor_Windows</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

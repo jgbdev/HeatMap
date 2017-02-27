@@ -1,6 +1,6 @@
 ﻿namespace HeatMap_Service
 {
-    partial class Service1
+    partial class TheService
     {
         /// <summary> 
         /// Required designer variable.

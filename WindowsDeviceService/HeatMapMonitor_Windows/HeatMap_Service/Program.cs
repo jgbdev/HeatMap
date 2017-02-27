@@ -17,7 +17,7 @@ namespace HeatMap_Service
             ServiceBase[] ServicesToRun;
             ServicesToRun = new ServiceBase[]
             {
-                new Service1()
+                new TheService()
             };
             ServiceBase.Run(ServicesToRun);
         }

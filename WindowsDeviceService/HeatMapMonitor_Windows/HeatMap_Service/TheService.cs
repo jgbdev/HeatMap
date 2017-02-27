@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace HeatMap_Service
 {
-    public partial class Service1 : ServiceBase
+    public partial class TheService : ServiceBase
     {
-        public Service1()
+        public TheService()
         {
             InitializeComponent();
         }
