@@ -75,9 +75,9 @@ module.exports =  class DatabaseInterface {
         }else if(req.method == "GET"){
 
             let id = req.params.id;
-            console.log(id);
-            if(id) {
 
+            if(id) {
+                console.log(id);
                 r.table('devices').get(id).run(connection, function(err, data){
 
                     if(err){
@@ -87,6 +87,16 @@ module.exports =  class DatabaseInterface {
                         console.log(data);
                         res.json(data);
                     }
+                });
+
+            }else{
+
+                r.table('devices').pluck("device_id").run(connection, function(err, cursor) {
+                    if (err) throw err;
+                    cursor.toArray(function(err, result) {
+                        if (err) throw err;
+                        res.json(result);
+                    });
                 });
 
             }
