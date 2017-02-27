@@ -60,8 +60,7 @@ namespace HeatMapMonitor_Windows.API
         public uint GetInterval(string DeviceId)
         {
             var request = new RestRequest();
-            request.Resource = "device/{id}";
-            request.AddParameter("id", DeviceId);
+            request.Resource = "device/" + DeviceId;
             request.Method = Method.GET;
 
             Response_Device resp = (Execute<Response_Device>(request) ?? new Response_Device());
@@ -98,8 +97,7 @@ namespace HeatMapMonitor_Windows.API
             }
 
             var request = new RestRequest();
-            request.Resource = "reading/{id}";
-            request.AddParameter("id", DeviceId);
+            request.Resource = "reading/" + DeviceId;
             request.Method = Method.POST;
             request.AddJsonBody(requestData);
 
