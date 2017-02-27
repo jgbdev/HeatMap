@@ -70,6 +70,8 @@ BODY
 
 [GET] `/api/reading/:device_id`
 
+Retrieves the latest data
+
 BODY
 ```
 {

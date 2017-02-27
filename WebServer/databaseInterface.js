@@ -37,12 +37,19 @@ module.exports =  class DatabaseInterface {
         r.tableCreate('readings',  {primaryKey: 'id'}).run(connection, function(err, conn){
             if(err){
                 console.log(err);
+            }else{
+                r.table('readings').indexCreate('time_stamp').run(connection, function(err,conn){
+                  if(err){
+                      console.log(err);
+                  }
+                });
             }
         });
     }
 
     device(req, res){
         if(req.method == "POST"){
+
             r.table('devices').insert(
                 {
                     "refresh_time":refresh_time,
@@ -68,20 +75,18 @@ module.exports =  class DatabaseInterface {
         }else if(req.method == "GET"){
 
             let id = req.params.id;
-
+            console.log(id);
             if(id) {
 
                 r.table('devices').get(id).run(connection, function(err, data){
-                    console.log(data);
-                });
 
-                res.json({
-                    device_id: id,
-                    coordinates: {
-                        lat: 0.11,
-                        long: 0.12
-                    },
-                    refresh_time: 30000
+                    if(err){
+                        console.log(err);
+                        res.status(500);
+                    }else{
+                        console.log(data);
+                        res.json(data);
+                    }
                 });
 
             }
@@ -91,7 +96,7 @@ module.exports =  class DatabaseInterface {
     reading(req, res){
         if(req.method == "POST"){
 
-            let id = req.params.device_id;
+            let id = req.params.id;
 
             let currentUnixTime = Date.now();
             let body = req.body;
@@ -113,54 +118,21 @@ module.exports =  class DatabaseInterface {
             });
 
         }else if(req.method == "GET"){
-            res.json({
-                data: [
-                    {
-                        "hardware_id" : "/dev/sda1",
-                        "sensor_info" : [
-                            {
-                                "tag" : "cpu0_max",
-                                "value": 12.32
-                            },
-                            {
-                                "tag" : "cpu1_max",
-                                "value": 10.32
-                            },
-                            {
-                                "tag" : "cpu2_max",
-                                "value": 1.32
-                            },
-                            {
-                                "tag" : "cpu3_max",
-                                "value": 14.32
-                            }
+            let id = req.params.id;
 
-
-                        ]
-                    },
-                    {
-                        "hardware_id" : "/dev/sda2",
-                        "sensor_info" : [
-                            {
-                                "tag" : "cpu0_max",
-                                "value": 122.32
-                            },
-                            {
-                                "tag" : "cpu1_max",
-                                "value": 102.32
-                            },
-                            {
-                                "tag" : "cpu2_max",
-                                "value": 12.32
-                            },
-                            {
-                                "tag" : "cpu3_max",
-                                "value": 124.32
-                            }
-                        ]
+            if(id) {
+                r.table('readings').orderBy({index: r.asc('time_stamp')}).filter({"device_id":  id}).nth(0).run(connection, function (err, data) {
+                    if(err){
+                        console.log(err);
+                        res.status(500);
+                    }else{
+                        console.log("GET READINGS");
+                        console.log(data);
+                        res.json(data);
                     }
-                ]
-            })
+                });
+
+            }
 
         }
     }

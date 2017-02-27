@@ -29,12 +29,12 @@ app.post("/api/device/", function(req, res) {
 
 
 
-app.get('/api/reading/:device_id', function (req, res){
+app.get('/api/reading/:id', function (req, res){
     dbInterface.reading(req,res);
 });
 
 app.get("/api/device/:id", function(req, res) {
-    console.log("POST: api/device");
+    console.log("GET: api/device");
     dbInterface.device(req, res);
 });
 
