@@ -2,7 +2,8 @@
 let r = require('rethinkdb');
 
 let connection = null;
-
+let db_name = 'test';
+let refresh_time = 30000;
 module.exports =  class DatabaseInterface {
 
     constructor(){
@@ -15,7 +16,7 @@ module.exports =  class DatabaseInterface {
         r.connect({
             host: 'localhost',
             port: '32769',
-            db : 'test'
+            db : db_name
         }, function (err, conn){
             console.log("Connected");
             connection = conn;
@@ -31,11 +32,32 @@ module.exports =  class DatabaseInterface {
                 console.log(err);
             }
         });
+
+
+        r.tableCreate('readings',  {primaryKey: 'id'}).run(connection, function(err, conn){
+            if(err){
+                console.log(err);
+            }else{
+                r.table('readings').indexCreate('time_stamp').run(connection, function(err,conn){
+                  if(err){
+                      console.log(err);
+                  }
+                });
+            }
+        });
     }
 
     device(req, res){
         if(req.method == "POST"){
-            r.db('test').table('devices').insert({}).run(connection, function(err, call){
+
+            r.table('devices').insert(
+                {
+                    "refresh_time":refresh_time,
+                    coordinates: {
+                        lat: 0.11,
+                        long: 0.12
+                    }
+                }).run(connection, function(err, call){
 
                 if(err){
                     console.log(err);
@@ -55,16 +77,26 @@ module.exports =  class DatabaseInterface {
             let id = req.params.id;
 
             if(id) {
+                console.log(id);
+                r.table('devices').get(id).run(connection, function(err, data){
 
-                let id_val = parseInt(id);
+                    if(err){
+                        console.log(err);
+                        res.status(500);
+                    }else{
+                        console.log(data);
+                        res.json(data);
+                    }
+                });
 
-                res.json({
-                    device_id: id_val,
-                    coordinates: {
-                        lat: 0.11,
-                        long: 0.12
-                    },
-                    refresh_time: 30000
+            }else{
+
+                r.table('devices').pluck("device_id").run(connection, function(err, cursor) {
+                    if (err) throw err;
+                    cursor.toArray(function(err, result) {
+                        if (err) throw err;
+                        res.json(result);
+                    });
                 });
 
             }
@@ -73,57 +105,44 @@ module.exports =  class DatabaseInterface {
 
     reading(req, res){
         if(req.method == "POST"){
-            res.json({});
-        }else if(req.method == "GET"){
-            res.json({
 
-                data: [
-                    {
-                        "hardware_id" : "/dev/sda1",
-                        "sensor_info" : [
-                            {
-                                "tag" : "cpu0_max",
-                                "value": 12.32
-                            },
-                            {
-                                "tag" : "cpu1_max",
-                                "value": 10.32
-                            },
-                            {
-                                "tag" : "cpu2_max",
-                                "value": 1.32
-                            },
-                            {
-                                "tag" : "cpu3_max",
-                                "value": 14.32
-                            }
+            let id = req.params.id;
 
+            let currentUnixTime = Date.now();
+            let data = req.body.data;
 
-                        ]
-                    },
-                    {
-                        "hardware_id" : "/dev/sda2",
-                        "sensor_info" : [
-                            {
-                                "tag" : "cpu0_max",
-                                "value": 122.32
-                            },
-                            {
-                                "tag" : "cpu1_max",
-                                "value": 102.32
-                            },
-                            {
-                                "tag" : "cpu2_max",
-                                "value": 12.32
-                            },
-                            {
-                                "tag" : "cpu3_max",
-                                "value": 124.32
-                            }
-                        ]
+            //TODO Schema check
+
+            let dd = {
+                "device_id" : id ,
+                "time_stamp" : currentUnixTime,
+                data
+            };
+            console.log(dd);
+            r.table('readings').insert(dd).run(connection, function(err, call){
+                    if(err){
+                        console.log(err);
+                    }else{
+                        res.json(data);
                     }
-                ]
-            })
+            });
+
+        }else if(req.method == "GET"){
+            let id = req.params.id;
+
+            if(id) {
+                r.table('readings').orderBy({index: r.desc('time_stamp')}).filter({"device_id":  id}).nth(0).run(connection, function (err, data) {
+                    if(err){
+                        console.log(err);
+                        res.status(500);
+                    }else{
+                        console.log("GET READINGS");
+                        console.log(data);
+                        res.json(data);
+                    }
+                });
+
+            }
 
         }
     }

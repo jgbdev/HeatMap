@@ -2,7 +2,10 @@
 
 
 
-## Device
+### Devices
+
+
+#Request a new device ID
 
 [POST] `/api/device`
 
@@ -26,6 +29,20 @@ RESPONSE
 ```
 
 
+## Get all Devices
+
+[GET] `/api/device`
+
+
+RESPONSE
+
+```
+{
+    "devices" : [<string>]
+}
+
+```
+
 
 ## Get Device Info
 
@@ -45,6 +62,14 @@ BODY
 
 }
 ```
+
+
+
+
+
+## List Devices
+
+
 
 ## Send reading
 
@@ -69,6 +94,8 @@ BODY
 
 
 [GET] `/api/reading/:device_id`
+
+Retrieves the latest data
 
 BODY
 ```
