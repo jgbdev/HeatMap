@@ -21,7 +21,7 @@ namespace HeatMapMonitor_Windows
         {
             get; private set;
         }
-        public uint? DeviceId
+        public string DeviceId
         {
             get; private set;
         }
@@ -36,13 +36,19 @@ namespace HeatMapMonitor_Windows
         {
             get
             {
-                return DeviceId.HasValue;
+                return !string.IsNullOrWhiteSpace(DeviceId);
             }
         }
 
         public bool RequiresSave
         {
             get; private set;
+        }
+
+        public static bool MuteLog
+        {
+            get;
+            private set;
         }
 
         public Config(string _APIBaseURL, string _APIAccountId, string _APISecretKey)
@@ -76,7 +82,12 @@ namespace HeatMapMonitor_Windows
                     APIBaseURL = lines[0];
                     APIAccountId = lines[1];
                     APIAccountSecretKey = lines[2];
-                    DeviceId = string.IsNullOrWhiteSpace(lines[3]) ? null : (uint?)(uint.Parse(lines[3]));
+                    DeviceId = lines[3];
+
+                    if (lines.Length >= 5)
+                    {
+                        MuteLog = bool.Parse(lines[4]);
+                    }
                 }
                 else
                 {
@@ -96,12 +107,13 @@ namespace HeatMapMonitor_Windows
                 configText.AppendLine(APIBaseURL ?? "");
                 configText.AppendLine(APIAccountId ?? "");
                 configText.AppendLine(APIAccountSecretKey ?? "");
-                configText.AppendLine(DeviceId.HasValue ? DeviceId.Value.ToString() : "");
+                configText.AppendLine(DeviceId ?? "");
+                configText.AppendLine(MuteLog.ToString());
                 File.WriteAllText(path, configText.ToString());
             }
         }
 
-        public void UpdateDeviceId(uint value)
+        public void UpdateDeviceId(string value)
         {
             DeviceId = value;
             RequiresSave = true;

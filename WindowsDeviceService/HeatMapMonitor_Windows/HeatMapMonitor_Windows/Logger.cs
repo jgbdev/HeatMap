@@ -13,6 +13,10 @@ namespace HeatMapMonitor_Windows
             //Console.WriteLine(message);
             //Console.WriteLine();
         };
+        public static event MessageLogged OnErrorLogged = (string message) => {
+            //Console.WriteLine(message);
+            //Console.WriteLine();
+        };
 
         public static void Log(Exception ex)
         {
@@ -23,12 +27,15 @@ namespace HeatMapMonitor_Windows
             message.AppendLine("---------------------------------------");
             message.AppendLine(ex.StackTrace);
             message.AppendLine("=======================================");
-            Log(message.ToString());
+            OnErrorLogged(message.ToString());
         }
 
         public static void Log(string message)
         {
-            OnMessageLogged(message);
+            if (!Config.MuteLog)
+            {
+                OnMessageLogged(message);
+            }
         }
 
     }

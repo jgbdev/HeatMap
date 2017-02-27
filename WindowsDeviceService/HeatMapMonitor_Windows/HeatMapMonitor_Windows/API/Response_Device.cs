@@ -8,7 +8,7 @@ namespace HeatMapMonitor_Windows.API
 {
     public sealed class Response_Device
     {
-        public uint device_id { get; set; }
+        public string device_id { get; set; }
         public Coordinates coordinates { get; set; }
         public uint refresh_time { get; set; }
     }

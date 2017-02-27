@@ -50,14 +50,14 @@ namespace HeatMapMonitor_Windows
 
             if (!config.HasDeviceId)
             {
-                uint IdResponse = api.GetId();
+                string IdResponse = api.GetId();
                 config.UpdateDeviceId(IdResponse);
                 config.Save(ConfigPath);
             }
 
             Logger.Log("Device id: " + config.DeviceId);
 
-            config.UpdatePeriod = api.GetInterval(config.DeviceId.Value);
+            config.UpdatePeriod = api.GetInterval(config.DeviceId);
 
             Logger.Log("Update period: " + config.UpdatePeriod);
             
@@ -100,7 +100,7 @@ namespace HeatMapMonitor_Windows
             Logger.Log("Updating...");
 
             Dictionary<string, HardwareInfo> HardwareInfos = hardware.GetHardwareInfos();
-            api.SendReading(config.DeviceId.Value, HardwareInfos);
+            api.SendReading(config.DeviceId, HardwareInfos);
 
             return true;
         }

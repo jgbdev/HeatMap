@@ -8,6 +8,6 @@ namespace HeatMapMonitor_Windows.API
 {
     public sealed class Response_Id
     {
-        public uint device_id { get; set; }
+        public string device_id { get; set; }
     }
 }

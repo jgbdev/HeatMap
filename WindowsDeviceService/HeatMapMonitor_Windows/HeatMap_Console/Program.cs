@@ -12,6 +12,7 @@ namespace HeatMap_Console
         static void Main(string[] args)
         {
             Logger.OnMessageLogged += Logger_OnMessageLogged;
+            Logger.OnErrorLogged += Logger_OnMessageLogged;
 
             Manager manager = new Manager();
             bool OK = true;
@@ -22,16 +23,16 @@ namespace HeatMap_Console
                 {
                     if (!(OK = manager.Init()))
                     {
-                        Console.WriteLine("Manager failed to initialise!");
+                        Logger_OnMessageLogged("Manager failed to initialise!");
                     }
                 }
                 catch (Exception ex)
                 {
                     OK = false;
 
-                    Console.WriteLine("Caught exception during intialisation: ");
-                    Console.WriteLine(ex.Message);
-                    Console.WriteLine(ex.StackTrace);
+                    Logger_OnMessageLogged("Caught exception during intialisation: ");
+                    Logger_OnMessageLogged(ex.Message);
+                    Logger_OnMessageLogged(ex.StackTrace);
                 }
             }
             
@@ -43,16 +44,16 @@ namespace HeatMap_Console
                 {
                     if (!(OK = manager.Shutdown()))
                     {
-                        Console.WriteLine("Manager failed to shutdown!");
+                        Logger_OnMessageLogged("Manager failed to shutdown!");
                     }
                 }
                 catch (Exception ex)
                 {
                     OK = false;
 
-                    Console.WriteLine("Caught exception during shutdown: ");
-                    Console.WriteLine(ex.Message);
-                    Console.WriteLine(ex.StackTrace);
+                    Logger_OnMessageLogged("Caught exception during shutdown: ");
+                    Logger_OnMessageLogged(ex.Message);
+                    Logger_OnMessageLogged(ex.StackTrace);
                 }
             }
 
@@ -66,12 +67,12 @@ namespace HeatMap_Console
 
         static void WaitShutdown()
         {
-            Console.WriteLine("Press any key to shutdown...");
+            Logger_OnMessageLogged("Press any key to shutdown...");
             Console.ReadKey();
         }
         static void WaitExit()
         {
-            Console.WriteLine("Press any key to exit...");
+            Logger_OnMessageLogged("Press any key to exit...");
             Console.ReadKey();
         }
     }
