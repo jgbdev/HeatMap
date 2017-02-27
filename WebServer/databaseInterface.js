@@ -11,7 +11,10 @@ module.exports =  class DatabaseInterface {
     }
 
 
+    setupTables(){
 
+        //r.db.('test'.tableCreate('table1',  {primaryKey: 'device_id'}).run()
+    }
 
     device(req, res){
         if(req.method == "POST"){
@@ -41,6 +44,7 @@ module.exports =  class DatabaseInterface {
     reading(req, res){
         if(req.method == "POST"){
 
+            res.json({});
 
         }else if(req.method == "GET"){
 
