@@ -18,9 +18,7 @@ Body: {
 
 ## Register hardware
 
-[POST]
-
-`/api/hardware/:device_id`
+[POST] `/api/hardware/:device_id`
 
 BODY
 
@@ -42,7 +40,7 @@ RESPONSE:
 
 ## Get Device Info
 
-[GET] /api/device/:id
+[GET] `/api/device/:id`
 
 RESPONSE
 
@@ -61,7 +59,8 @@ BODY
 
 ## Send reading
 
-[POST] /api/reading/:device_id
+[POST] `/api/reading/:device_id`
+
 BODY
 ```
 {
