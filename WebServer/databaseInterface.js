@@ -49,6 +49,7 @@ module.exports =  class DatabaseInterface {
                 }
 
             });
+
         }else if(req.method == "GET"){
 
             let id = req.params.id;
@@ -72,9 +73,7 @@ module.exports =  class DatabaseInterface {
 
     reading(req, res){
         if(req.method == "POST"){
-
-
-
+            res.json({});
         }else if(req.method == "GET"){
             res.json({
 
