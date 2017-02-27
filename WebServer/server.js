@@ -26,6 +26,12 @@ app.post("/api/device/", function(req, res) {
     dbInterface.device(req, res);
 });
 
+
+app.get("/api/device/:id", function(req, res) {
+    console.log("POST: api/device");
+    dbInterface.device(req, res);
+});
+
 app.get('/', function (req, res) {
     res.status(404)
 });

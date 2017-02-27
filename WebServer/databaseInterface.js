@@ -12,7 +12,15 @@ module.exports =  class DatabaseInterface {
                 "device_id" : this.device_id ++
             });
         }else if(req.method == "GET"){
-
+            let id = req.params.id;
+            res.json({
+                    device_id: id,
+                    coordinates : {
+                    lat: 0.11,
+                    long: 0.12
+                },
+                refresh_time: 20
+            });
         }
     }
 
