@@ -34,13 +34,24 @@ app.get("/api/device", function(req, res) {
 
 //READING APIS
 app.get('/api/reading/:id', function (req, res){
-    dbInterface.reading(req,res);
+    dbInterface.reading_single(req,res);
 });
 
 app.post("/api/reading/:id", function(req, res) {
     console.log("POST: Reading");
-    dbInterface.reading(req,res);
+    dbInterface.reading_single(req,res);
 });
+
+app.get("/api/reading/:id/from/:from", function(req, res) {
+    console.log("POST: Reading");
+    dbInterface.reading_range(req,res);
+});
+
+app.get("/api/reading/:id/from/:from/to/:to", function(req, res) {
+    console.log("POST: Reading");
+    dbInterface.reading_range(req,res);
+});
+
 
 
 app.get('/', function (req, res) {

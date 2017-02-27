@@ -122,7 +122,7 @@ module.exports =  class DatabaseInterface {
         }
     }
 
-    reading(req, res){
+    reading_single(req, res){
         if(req.method == "POST"){
 
             let id = req.params.id;
@@ -164,6 +164,42 @@ module.exports =  class DatabaseInterface {
             }
 
         }
+    }
+
+
+    reading_range(req, res){
+        let id = req.params.id;
+        let from = req.params.from;
+        let to = req.params.to;
+        if(id && from){
+
+            let max = r.maxval;
+
+            //TODO int checking
+
+            if(to){
+                max = parseInt(to);
+            }
+
+            let from_int = parseInt(from);
+
+
+            console.log(from);
+                r.table('readings').between(from_int, max, { 'index' : 'time_stamp'}).run(connection, function (err, cursor){
+                    if (err) throw err;
+                    cursor.toArray(function(err, result) {
+                        if (err) throw err;
+                        console.log(result);
+                        res.json(result);
+                    });
+
+                });
+
+        }else{
+            res.status(500);
+        }
+
+
     }
 
 };
