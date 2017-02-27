@@ -25,7 +25,7 @@ namespace HeatMapMonitor_Windows
         {
             bool OK = true;
 
-            ConfigPath = Path.Combine(Environment.CurrentDirectory, "config.txt");
+            ConfigPath = Path.Combine(Environment.CurrentDirectory, "heatmap_config.txt");
 
             try
             {
@@ -40,10 +40,16 @@ namespace HeatMapMonitor_Windows
             catch (IndexOutOfRangeException)
             {
                 config = new Config(DefaultAPIBaseURL, DefaultAPIAccountId, DefaultAPISecretKey);
+
+                config.UpdateDeviceId("");
+                config.Save(ConfigPath);
             }
             catch (FileNotFoundException)
             {
                 config = new Config(DefaultAPIBaseURL, DefaultAPIAccountId, DefaultAPISecretKey);
+
+                config.UpdateDeviceId("");
+                config.Save(ConfigPath);
             }
 
             api = new API.HeatMapAPI(config);
