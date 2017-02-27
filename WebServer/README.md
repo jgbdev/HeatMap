@@ -24,7 +24,8 @@ Body: {
 
 [GET] /api/device/:id
 Resp:
-Body: {
+BODY
+{
     device_id: <uint>,
     coordinates : {
         lat: <float>
@@ -35,6 +36,8 @@ Body: {
 
 device id, hardware id  tag float
 POST /api/reading/:device_id
+BODY
+{
     time: <unix_time>
     data : [{
         "hardware_id" : <uint>,
