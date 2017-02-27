@@ -134,6 +134,10 @@ namespace HeatMapMonitor_Windows
 
                     sninfo.AddValue(Tag + "_multiple_avg", val_tot);
                 }
+                else
+                {
+                    Logger.Log("No value for \"" + Tag + "\" sensor - did you remember to run as admin?");
+                }
             }
         }
     }
