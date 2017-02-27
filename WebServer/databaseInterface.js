@@ -6,9 +6,7 @@ let connection = null;
 module.exports =  class DatabaseInterface {
 
     constructor(){
-        this.device_id = 0;
-        //this.connect(this);
-
+        this.connect(this);
     }
 
 
@@ -37,9 +35,19 @@ module.exports =  class DatabaseInterface {
 
     device(req, res){
         if(req.method == "POST"){
+            r.db('test').table('devices').insert({}).run(connection, function(err, call){
 
-            res.json({
-                "device_id" : this.device_id ++
+                if(err){
+                    console.log(err);
+                }else{
+                    let device_id = call.generated_keys;
+                    if(device_id){
+                        res.json({"device_id": device_id[0]});
+                    }else{
+                        res.status(500);
+                    }
+                }
+
             });
         }else if(req.method == "GET"){
 
@@ -64,7 +72,9 @@ module.exports =  class DatabaseInterface {
 
     reading(req, res){
         if(req.method == "POST"){
-            res.json({});
+
+
+
         }else if(req.method == "GET"){
             res.json({
 
