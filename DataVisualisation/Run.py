@@ -19,7 +19,7 @@ def main():
     print data.shape
 
     som = s.SelfOrganisingMap([data.shape[1], 20*20],20)
-    som.Train(data,5000)
+    som.Train(data,5000,0.5)
 
 
 

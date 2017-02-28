@@ -15,7 +15,7 @@ class SelfOrganisingMap(object):
         self.y = width
         self.radius = width/2
 
-    def Train(self, data, iterations):
+    def Train(self, data, iterations, learning_orig):
 
         data_shape = data.shape
 
@@ -27,10 +27,14 @@ class SelfOrganisingMap(object):
 
             m_iter_radius = self.radius * m.exp(-iter / m_time_constant)
 
+            learning_rate = learning_orig * m.exp( - iter / m_time_constant)
+
             for d in range(0, data_count):
 
                 lowest_distance = sys.float_info.max
                 lowest_index = (-1,-1)
+
+
 
                 for y in range(0, self.y ):
                     for x in range(0, self.x):
@@ -46,12 +50,11 @@ class SelfOrganisingMap(object):
                     print "Could not find a closest item"
                     exit(-1)
 
-
                 for y in range(0, self.y ):
                     for x in range(0, self.x):
                         dist = m.pow(x-lowest_index[0],2) + m.pow(y-lowest_index[1],2)
                         if dist < m_iter_radius_square:
-                            print "Found you!"
+                            self.weights[0][index] += learning_rate * (data[index] - self.weights[0][index])
 
 
 
