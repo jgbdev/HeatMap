@@ -292,7 +292,7 @@ paths:
         200:
           description: Successful response
           schema:
-            title: ArrayOfData
+            title: DataWrapper
             type: object
             properties:
               data:
