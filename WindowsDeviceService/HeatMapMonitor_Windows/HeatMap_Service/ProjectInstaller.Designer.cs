@@ -42,6 +42,7 @@
             this.serviceInstaller1.Description = "The Heat Map Service";
             this.serviceInstaller1.DisplayName = "Heat Map Service";
             this.serviceInstaller1.ServiceName = "Heat Map Service";
+            this.serviceInstaller1.StartType = System.ServiceProcess.ServiceStartMode.Automatic;
             // 
             // ProjectInstaller
             // 
