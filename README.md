@@ -13,7 +13,7 @@ Hi! Thanks for trying out our Heat Map service. There are both Linux (Ubuntu or 
 1. Go to the download URL above
 2. Click the "Download" arrow in the top-right corner to download the whole zip file
 3. Unzip the file to a folder of your choice
-4. Open the Visual Studio Developer Command Prompt (not an ordinary command prompt) (search in all programs)
+4. Search for "Developer" in your programs and **Run as admin** **"Developer Command Prompt for VS[2013/2015/17]"** (not an ordinary command prompt)
 5. "cd" to the unzipped folder
 6. Run "installutil.exe heatmap_service.exe"
 7. Open Services (Right click Windows button and click Services or open Task Manager, go to Services tab, then click "Open Services")
