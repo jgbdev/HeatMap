@@ -34,6 +34,7 @@ app.get("/api/device", function(req, res) {
 
 //READING APIS
 app.get('/api/reading/:id', function (req, res){
+    console.log("GET: Reading");
     dbInterface.reading_single(req,res);
 });
 
@@ -43,12 +44,12 @@ app.post("/api/reading/:id", function(req, res) {
 });
 
 app.get("/api/reading/:id/from/:from", function(req, res) {
-    console.log("POST: Reading");
+    console.log("GET: Reading /from ");
     dbInterface.reading_range(req,res);
 });
 
 app.get("/api/reading/:id/from/:from/to/:to", function(req, res) {
-    console.log("POST: Reading");
+    console.log("GET: Reading /from/to");
     dbInterface.reading_range(req,res);
 });
 
