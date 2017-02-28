@@ -175,7 +175,7 @@ module.exports =  class DatabaseInterface {
         let to = req.params.to;
         if(id && from){
 
-            let max = r.maxval;
+            let max = Date.now() + 1;
 
             //TODO int checking
 
@@ -200,8 +200,6 @@ module.exports =  class DatabaseInterface {
         }else{
             res.status(500);
         }
-
-
     }
 
 };
