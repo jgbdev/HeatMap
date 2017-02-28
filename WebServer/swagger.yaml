@@ -225,40 +225,43 @@ paths:
         200:
           description: Successful response
           schema:
-            title: ArrayOfData
-            type: array
-            items:
-              title: DeviceData
-              type: object
-              properties:
-                device_id:
-                  type: string
-                  format: uuid
-                id:
-                  type: string
-                  format: uuid
-                time_stamp:
-                  type: number
-                  format: utc
-                data: 
-                  type: array
-                  items:
-                    title: Hardware
-                    type: object
-                    properties:
-                      hardware_id:
-                        type: string
-                      sensor_info:
-                        type: array
-                        items:
-                          title: Sensor Reading
-                          type: object
-                          properties:
-                            tag:
-                              type: string
-                            value:
-                              type: number
-                              format: float
+            title: DataWrapper
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  title: DeviceData
+                  type: object
+                  properties:
+                    device_id:
+                      type: string
+                      format: uuid
+                    id:
+                      type: string
+                      format: uuid
+                    time_stamp:
+                      type: number
+                      format: utc
+                    data: 
+                      type: array
+                      items:
+                        title: Hardware
+                        type: object
+                        properties:
+                          hardware_id:
+                            type: string
+                          sensor_info:
+                            type: array
+                            items:
+                              title: Sensor Reading
+                              type: object
+                              properties:
+                                tag:
+                                  type: string
+                                value:
+                                  type: number
+                                  format: float
   /api/reading/{id}/from/{from}/to/{to}:
     get:
       description: |
@@ -290,36 +293,39 @@ paths:
           description: Successful response
           schema:
             title: ArrayOfData
-            type: array
-            items:
-              title: DeviceData
-              type: object
-              properties:
-                device_id:
-                  type: string
-                  format: uuid
-                id:
-                  type: string
-                  format: uuid
-                time_stamp:
-                  type: number
-                  format: utc
-                data: 
-                  type: array
-                  items:
-                    title: Hardware
-                    type: object
-                    properties:
-                      hardware_id:
-                        type: string
-                      sensor_info:
-                        type: array
-                        items:
-                          title: Sensor Reading
-                          type: object
-                          properties:
-                            tag:
-                              type: string
-                            value:
-                              type: number
-                              format: float
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  title: DeviceData
+                  type: object
+                  properties:
+                    device_id:
+                      type: string
+                      format: uuid
+                    id:
+                      type: string
+                      format: uuid
+                    time_stamp:
+                      type: number
+                      format: utc
+                    data: 
+                      type: array
+                      items:
+                        title: Hardware
+                        type: object
+                        properties:
+                          hardware_id:
+                            type: string
+                          sensor_info:
+                            type: array
+                            items:
+                              title: Sensor Reading
+                              type: object
+                              properties:
+                                tag:
+                                  type: string
+                                value:
+                                  type: number
+                                  format: float
