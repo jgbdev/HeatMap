@@ -192,7 +192,7 @@ module.exports =  class DatabaseInterface {
                     cursor.toArray(function(err, result) {
                         if (err) throw err;
                         console.log(result);
-                        res.json(result);
+                        res.json({"data" : result});
                     });
 
                 });
