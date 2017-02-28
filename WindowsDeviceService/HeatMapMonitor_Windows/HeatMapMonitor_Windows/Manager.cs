@@ -96,8 +96,8 @@ namespace HeatMapMonitor_Windows
 
             if (!Updated)
             {
-                Logger.Log("Manager failed to update. Stopping interval timer...");
-                timer.Stop();
+                Logger.Log("Manager failed to update.");// Stopping interval timer...");
+                //timer.Stop();
             }
         }
 

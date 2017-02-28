@@ -30,9 +30,7 @@ namespace HeatMap_Console
                 {
                     OK = false;
 
-                    Logger_OnMessageLogged("Caught exception during intialisation: ");
-                    Logger_OnMessageLogged(ex.Message);
-                    Logger_OnMessageLogged(ex.StackTrace);
+                    Logger.Log(ex);
                 }
             }
             
@@ -51,9 +49,7 @@ namespace HeatMap_Console
                 {
                     OK = false;
 
-                    Logger_OnMessageLogged("Caught exception during shutdown: ");
-                    Logger_OnMessageLogged(ex.Message);
-                    Logger_OnMessageLogged(ex.StackTrace);
+                    Logger.Log(ex);
                 }
             }
 
