@@ -21,7 +21,15 @@ namespace HeatMapMonitor_Windows
         Config config;
         Timer timer;
 
-        public bool Init()
+        public Config TheConfig
+        {
+            get
+            {
+                return config;
+            }
+        }
+
+        public bool Init(bool StartInterval = true)
         {
             bool OK = true;
 
@@ -77,7 +85,10 @@ namespace HeatMapMonitor_Windows
                 throw new Exception("Failed initial update.");
             }
 
-            timer.Start();
+            if (StartInterval)
+            {
+                timer.Start();
+            }
 
             return OK;
         }
@@ -104,11 +115,15 @@ namespace HeatMapMonitor_Windows
         public bool Update()
         {
             Logger.Log("Updating...");
-
-            Dictionary<string, HardwareInfo> HardwareInfos = hardware.GetHardwareInfos();
-            api.SendReading(config.DeviceId, HardwareInfos);
+            
+            UploadReadings(hardware.GetHardwareInfos());
 
             return true;
+        }
+
+        public void UploadReadings(Dictionary<string, HardwareInfo> HardwareInfos)
+        {
+            api.SendReading(config.DeviceId, HardwareInfos);
         }
 
         public bool Shutdown()
