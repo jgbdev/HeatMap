@@ -4,13 +4,24 @@ Hi! Thanks for trying out our Heat Map service. There are both Linux (Ubuntu or 
 
 # Windows
 
-*Windows Download:* [http://tinyurl.com/cssheatmap](http://tinyurl.com/cssheatmap)
+*Windows Download:* [PowerShell Install Script](https://raw.githubusercontent.com/jgbdev/HeatMap/master/WindowsDeviceService/HeatMapMonitor_Windows/PowerShellInstall/InstallHeatMap.ps1)
 
 *Requirements:* Admin privileges, **Visual Studio** installed (sorry, we've only done a "dev" version so far)
 
 *Installation instructions:*
 
-1. Go to the download URL above
+### Automatic Installation
+
+1. Download the PowerShell Installer script from the above link
+2. Open a PowerShell terminal in Admin mode
+3. You may need to run: `Set-ExecutionPolicy -ExecutionPolicy Unrestricted`
+4. cd to wherever you saved that file
+5. Run: `.\InstallHeatMap.ps1`
+6. Hopefully that worked. If not, follow the manual instructions below.
+
+### Manual Installation
+
+1. Download the latest release from the Releases folder
 2. Click the "Download" arrow in the top-right corner to download the whole zip file
 3. Unzip the file to a folder of your choice
 4. Search for "Developer" in your programs and **Run as admin** **"Developer Command Prompt for VS[2013/2015/17]"** (not an ordinary command prompt)

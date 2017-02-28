@@ -58,6 +58,7 @@ namespace HeatMapMonitor_Windows
             APIAccountSecretKey = _APISecretKey;
             DeviceId = null;
             RequiresSave = false;
+            MuteLog = true;
         }
 
         public Config(string path)

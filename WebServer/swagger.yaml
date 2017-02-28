@@ -1,0 +1,325 @@
+swagger: '2.0'
+
+info:
+  version: "0.1.0"
+  title: Heat Map API
+
+paths:
+  /api/device:
+    get:
+      description: |
+        Gets partial device objects for all registered devices containing only the device id(s).
+      responses:
+        200:
+          description: Successful response
+          schema:
+            title: ArrayOfDevices
+            type: array
+            items:
+              title: Device
+              type: object
+              properties:
+                device_id:
+                  type: string
+    post:
+      description: |
+        Registers a new device and returns the new id for the device.
+      responses:
+        200:
+          description: Successful response
+          schema:
+            title: Device
+            type: object
+            properties:
+              device_id:
+                type: string
+                format: uuid
+  /api/device/{id}:
+    get:
+      description: |
+        Gets the full description of a device.
+      parameters:
+        - 
+          name: id
+          in: path
+          description: Id of the device to get.
+          required: true
+          type: string
+          format: uuid
+      responses:
+        200:
+          description: Successful response
+          schema:
+            title: Device
+            type: object
+            properties:
+              device_id:
+                type: string
+                format: uuid
+              coordinates:
+                title: Coordinates
+                type: object
+                properties:
+                  lat: 
+                    type: number
+                    format: float
+                  long:
+                    type: number
+                    format: float
+    patch:
+      description: |
+        Updates a device description.
+      parameters:
+        - 
+          name: id
+          in: path
+          description: Id of the device to get.
+          required: true
+          type: string
+          format: uuid
+        -
+          name: Device
+          in: body
+          description: The new information to update with.
+          required: true
+          schema:
+            title: Device Coordinates
+            type: object
+            properties:
+              coordinates:
+                type: object
+                properties:
+                  lat:
+                    type: number
+                    format: float
+                  long:
+                    type: number
+                    format: float
+      responses:
+        200:
+          description: Successful response
+          schema:
+            title: Empty
+            type: object
+  /api/reading/{id}:
+    get:
+      description: |
+        Gets the latest reading for the specified device.
+      parameters:
+        -
+          name: id
+          in: path
+          description: Id of the device to get latest reading of.
+          required: true
+          type: string
+          format: uuid
+      responses:
+        200:
+          description: Successful response
+          schema:
+            title: Reading
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  title: Hardware
+                  type: object
+                  properties:
+                    hardware_id:
+                      type: string
+                    sensor_info:
+                      type: array
+                      items:
+                        title: Sensor Reading
+                        type: object
+                        properties:
+                          tag:
+                            type: string
+                          value:
+                            type: number
+                            format: float
+    post:
+      description: |
+        Adds a new reading to the specified device (as the latest reading).
+      parameters:
+        -
+          name: id
+          in: path
+          description: Id of the device to add the reading to.
+          required: true
+          type: string
+          format: uuid
+        - 
+          name: Reading
+          in: body
+          description: The reading data to add.
+          required: true
+          schema:
+            title: ArrayOfHardware
+            type: array
+            items:
+              title: Hardware
+              type: object
+              properties:
+                hardware_id:
+                  type: string
+                  format: uuid
+                sensor_info:
+                  type: array
+                  items:
+                    title: Sensor Info
+                    type: object
+                    properties:
+                      tag:
+                        type: string
+                      value:
+                        type: number
+                        format: float
+      responses:
+        200:
+          description: Successful response (Copy of input data)
+          schema:
+            title: Reading
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  title: Hardware
+                  type: object
+                  properties:
+                    hardware_id:
+                      type: string
+                    sensor_info:
+                      type: array
+                      items:
+                        title: Sensor Reading
+                        type: object
+                        properties:
+                          tag:
+                            type: string
+                          value:
+                            type: number
+                            format: float
+  /api/reading/{id}/from/{from}:
+    get:
+      description: |
+        Gets readings from the specified device starting from the specified time.
+      parameters:
+        -
+          name: id
+          in: path
+          description: The id of the device to get readings of.
+          required: true
+          type: string
+          format: uuid
+        - 
+          name: from
+          in: path
+          description: The Unix time to start from.
+          required: true
+          type: number
+          format: utc
+      responses:
+        200:
+          description: Successful response
+          schema:
+            title: ArrayOfData
+            type: array
+            items:
+              title: DeviceData
+              type: object
+              properties:
+                device_id:
+                  type: string
+                  format: uuid
+                id:
+                  type: string
+                  format: uuid
+                time_stamp:
+                  type: number
+                  format: utc
+                data: 
+                  type: array
+                  items:
+                    title: Hardware
+                    type: object
+                    properties:
+                      hardware_id:
+                        type: string
+                      sensor_info:
+                        type: array
+                        items:
+                          title: Sensor Reading
+                          type: object
+                          properties:
+                            tag:
+                              type: string
+                            value:
+                              type: number
+                              format: float
+  /api/reading/{id}/from/{from}/to/{to}:
+    get:
+      description: |
+        Gets readings from the specified device between the specified times.
+      parameters:
+        -
+          name: id
+          in: path
+          description: The id of the device to get readings of.
+          required: true
+          type: string
+          format: uuid
+        - 
+          name: from
+          in: path
+          description: The Unix time to start from.
+          required: true
+          type: number
+          format: utc
+        - 
+          name: to
+          in: path
+          description: The Unix time to end at.
+          required: true
+          type: number
+          format: utc
+      responses:
+        200:
+          description: Successful response
+          schema:
+            title: ArrayOfData
+            type: array
+            items:
+              title: DeviceData
+              type: object
+              properties:
+                device_id:
+                  type: string
+                  format: uuid
+                id:
+                  type: string
+                  format: uuid
+                time_stamp:
+                  type: number
+                  format: utc
+                data: 
+                  type: array
+                  items:
+                    title: Hardware
+                    type: object
+                    properties:
+                      hardware_id:
+                        type: string
+                      sensor_info:
+                        type: array
+                        items:
+                          title: Sensor Reading
+                          type: object
+                          properties:
+                            tag:
+                              type: string
+                            value:
+                              type: number
+                              format: float
