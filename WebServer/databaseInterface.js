@@ -187,7 +187,7 @@ module.exports =  class DatabaseInterface {
 
 
             console.log(from);
-                r.table('readings').between(from_int, max, { 'index' : 'time_stamp'}).run(connection, function (err, cursor){
+                r.table('readings').between(from_int, max, { 'index' : 'time_stamp'}).filter({"device_id":  id}).run(connection, function (err, cursor){
                     if (err) throw err;
                     cursor.toArray(function(err, result) {
                         if (err) throw err;
