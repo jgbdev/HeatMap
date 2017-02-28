@@ -23,7 +23,7 @@ app.get("/api/device/:id", function(req, res) {
 });
 
 app.patch("/api/device/:id", function(req, res) {
-    console.log("GET: api/device");
+    console.log("PATCH: api/device");
     dbInterface.device(req, res);
 });
 

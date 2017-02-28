@@ -150,15 +150,17 @@ module.exports =  class DatabaseInterface {
             let id = req.params.id;
 
             if(id) {
-                r.table('readings').orderBy({index: r.desc('time_stamp')}).filter({"device_id":  id}).nth(0).run(connection, function (err, data) {
-                    if(err){
-                        console.log(err);
-                        res.status(500);
-                    }else{
-                        console.log("GET READINGS");
-                        console.log(data);
-                        res.json(data);
-                    }
+                r.table('readings').orderBy({index: r.desc('time_stamp')}).filter({"device_id":  id}).run(connection, function (err, cursor) {
+                    if (err) throw err;
+                    cursor.toArray(function(err, result) {
+                        if (err) throw err;
+                        console.log(result);
+                        if(result.length == 0){
+                            res.json({});
+                        }else{
+                            res.json(result[0]);
+                        }
+                    });
                 });
 
             }
@@ -173,7 +175,7 @@ module.exports =  class DatabaseInterface {
         let to = req.params.to;
         if(id && from){
 
-            let max = r.maxval;
+            let max = Date.now() + 1;
 
             //TODO int checking
 
@@ -198,8 +200,6 @@ module.exports =  class DatabaseInterface {
         }else{
             res.status(500);
         }
-
-
     }
 
 };
