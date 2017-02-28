@@ -1,3 +1,4 @@
+# -*- coding: latin-1 -*-
 #RestfulClient.py
 
 import requests
@@ -68,7 +69,30 @@ def SendReading():
     elif (mode == "sensors"):
         print "Using 'sensors' mode"
         
-        payload = { "data": [{ "hardware_id": "cpu", "sensor_info": [{ "tag": "cpu_temperature", "value": 5 }] }] }
+        #sampleData = "acpitz-virtual-0\nAdapter: Virtual device\ntemp1:        +80.0°C  (crit = +106.0°C)\ntemp2:        +29.8°C  (crit = +106.0°C)\n\ncoretemp-isa-0000\nAdapter: ISA adapter\nPhysical id 0:  +81.0°C  (high = +87.0°C, crit = +105.0°C)\nCore 0:         +74.0°C  (high = +87.0°C, crit = +105.0°C)\nCore 1:         +79.0°C  (high = +87.0°C, crit = +105.0°C)\nCore 2:         +81.0°C  (high = +87.0°C, crit = +105.0°C)\nCore 3:         +78.0°C  (high = +87.0°C, crit = +105.0°C)"
+        
+        sampleData = check_output(["sensors"])
+        
+        lines = sampleData.split('\n')
+        temperatures = []
+        for line in lines:
+            stripLine = line.strip()
+            if (stripLine.startswith("temp")):
+                tempPart = stripLine.split('+')[1]
+                tempPart = tempPart.split('°')[0]
+                temp = float(tempPart.strip('�'))
+                temperatures.append(temp)
+            elif (stripLine.startswith("Core ")):
+                tempPart = stripLine.split('+')[1]
+                tempPart = tempPart.split('°')[0]
+                temp = float(tempPart.strip('�'))
+                temperatures.append(temp)
+        
+        sensor_info = []
+        for temp in temperatures:
+            sensor_info.append({ "tag": "cpu_temperature", "value": temp })
+        
+        payload = { "data": [{ "hardware_id": "cpu", "sensor_info": sensor_info }] }
         print payload
         print "Uploading reading"
         POST("reading/" + id, payload)
