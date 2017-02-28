@@ -27,6 +27,8 @@ class SelfOrganisingMap(object):
 
             m_iter_radius = self.radius * m.exp(-iter / m_time_constant)
 
+            m_iter_radius_square = 2*m.pow(m_iter_radius,2)
+
             learning_rate = learning_orig * m.exp( - iter / m_time_constant)
 
             for d in range(0, data_count):
@@ -46,15 +48,18 @@ class SelfOrganisingMap(object):
 
                 m_iter_radius_square = m.pow(m_iter_radius,2)
 
-                if lowest_index ==  (-1,-1):
+                if lowest_index == (-1,-1):
                     print "Could not find a closest item"
                     exit(-1)
 
                 for y in range(0, self.y ):
                     for x in range(0, self.x):
-                        dist = m.pow(x-lowest_index[0],2) + m.pow(y-lowest_index[1],2)
-                        if dist < m_iter_radius_square:
-                            self.weights[0][index] += learning_rate * (data[index] - self.weights[0][index])
+                        dist_sqr = m.pow(x-lowest_index[0],2) + m.pow(y-lowest_index[1],2)
+                        if dist_sqr < m_iter_radius_square:
+
+                            distance_weight = m.exp(-dist_sqr/m_iter_radius_square)
+
+                            self.weights[0][index] += learning_rate * distance_weight * (data[index] - self.weights[0][index])
 
 
 
