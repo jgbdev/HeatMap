@@ -1,13 +1,13 @@
-## Running  the API Server
-#Install and run the RethinkDB
+# Running  the API Server
+###Install and run the RethinkDB
 
 Install via docker `docker run -d -P --name rethink1 rethinkdb`
 Other [methods](https://rethinkdb.com/docs/install/)
 
-#Install node dependencies
+###Install node dependencies
 ``` npm install ```
 
-#Run Server
+###Run Server
 ``` node server.js ```
 
 
